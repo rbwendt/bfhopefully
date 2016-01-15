@@ -53,3 +53,18 @@ func (s *Scanner) Scan() (token Token, err error) {
 	}
 	return token, nil
 }
+
+func (s *Scanner) ScanAll() (tokens []Token, err error) {
+	scanning := true
+	for scanning {
+		token, err := s.Scan()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return tokens, err
+		}
+		tokens = append(tokens, token)
+	}
+	return tokens, nil
+}

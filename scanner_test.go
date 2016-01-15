@@ -4,6 +4,7 @@ import (
 	"testing"
 	b "bfhopefully"
 	"bytes"
+	"reflect"
 )
 
 func TestScan(t *testing.T) {
@@ -19,5 +20,19 @@ func TestScan(t *testing.T) {
 		if token != expectedTokens[i] {
 			t.Error("Unexpected token")
 		}
+	}
+}
+
+func TestScanAll(t *testing.T) {
+	input := []byte("<>+- .,[]")
+	r := bytes.NewReader(input)
+	expectedTokens := []b.Token{b.DecrementPointer, b.IncrementPointer, b.IncrementByte, b.DecrementByte, b.Other, b.OutputByte, b.InputByte, b.JumpForward, b.JumpBackward}
+	scanner := b.NewScanner(r)
+	tokens, err := scanner.ScanAll()
+	if err != nil {
+		t.Error("Unexpected error %s", err)
+	}
+	if !reflect.DeepEqual(expectedTokens, tokens) {
+		t.Error("ScanAll token mismatch")
 	}
 }
