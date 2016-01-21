@@ -4,14 +4,14 @@ import (
 	"bufio"
 )
 
-func (m *Machine) IncrementPointerFn() {
+func (m *Machine) IncrementPointer() {
 	if m.Position == len(m.State) - 1 {
 		m.State = append(m.State, byte(0))
 	}
 	m.Position ++
 }
 
-func (m *Machine) DecrementPointerFn() {
+func (m *Machine) DecrementPointer() {
 	if m.Position == 0 {
 		m.State = append([]byte{byte(0)}, m.State...)
 	} else {
@@ -19,24 +19,24 @@ func (m *Machine) DecrementPointerFn() {
 	}
 }
 
-func (m *Machine) incrementByteFn() {
+func (m *Machine) IncrementByte() {
 	m.State[m.Position]++
 }
 
-func (m *Machine) decrementByteFn() {
+func (m *Machine) DecrementByte() {
 	m.State[m.Position]--
 }
 
-func (m *Machine) outputByteFn() {
+func (m *Machine) OutputByte() {
 	m.Output = append(m.Output, m.State[m.Position])
 }
 
-func (m *Machine) InputByteFn() {
+func (m *Machine) InputByte() {
 	input, _ := m.Input.ReadRune()
 	m.State[m.Position] = byte(input)
 }
 
-func (m *Machine) JumpForwardFn() {
+func (m *Machine) JumpForward() {
 	if m.State[m.Position] == 0 {
 		parenCount := 1
 		for i := m.Operation; i < len(m.Operations) ; i++ {
@@ -53,21 +53,51 @@ func (m *Machine) JumpForwardFn() {
 	}
 }
 
-func (m *Machine) JumpBackwardFn() {
+func (m *Machine) JumpBackward() {
 	if m.State[m.Position] != 0 {
 		parenCount := 1
+		jumped := false
 		for i := m.Operation; i > 0 ; i-- {
 			if m.Operations[i] == JumpForward {
 				parenCount --
 				if parenCount == 0 {
 					m.Operation = i
+					jumped = true
 					break;
 				}
 			} else if m.Operations[i] == JumpBackward {
 				parenCount ++
 			}
 		}
+		if !jumped {
+			m.Operation ++
+		}
 	}
+}
+
+func (m *Machine) Run() ([]byte) {
+	for m.Operation < len(m.Operations) {
+		currentOperation := m.Operations[m.Operation]
+		if currentOperation == IncrementPointer {
+			m.IncrementPointer()
+		} else if currentOperation == DecrementPointer {
+			m.DecrementPointer()
+		} else if currentOperation == IncrementByte {
+			m.IncrementByte()
+		} else if currentOperation == DecrementByte {
+			m.DecrementByte()
+		} else if currentOperation == InputByte {
+			m.InputByte()
+		} else if currentOperation == OutputByte {
+			m.OutputByte()
+		} else if currentOperation == JumpForward {
+			m.JumpForward()
+		} else if currentOperation == JumpBackward {
+			m.JumpBackward()
+		}
+		m.Operation++
+	}
+	return m.Output
 }
 
 type Machine struct {
@@ -89,4 +119,6 @@ func NewMachine(t []Token) Machine {
 	}
 	return m
 }
+
+
 

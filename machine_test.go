@@ -1,6 +1,7 @@
 package bfhopefully_test
 
 import (
+	"bytes"
 	"testing"
 	b "bfhopefully"
 )
@@ -30,5 +31,36 @@ func TestNewMachine(t *testing.T) {
 	if m.Operations[1] != b.InputByte {
 		t.Error("Unexpected Operation")
 	}
+}
 
+func TestRun(t *testing.T) {
+	input := []byte("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.---.+++++++..+++.")
+	r := bytes.NewReader(input)
+	scanner := b.NewScanner(r)
+	tokens, err := scanner.ScanAll()
+		if err != nil {
+		t.Error("Unexpected error %s", err)
+	}
+	m := b.NewMachine(tokens)
+	output := m.Run()
+	outputString := string(output)
+	if outputString != "HELLO" {
+		t.Error("Expecting 'HELLO' received " + outputString)
+	}
+}
+
+func STestRun(t *testing.T) {
+	input := []byte("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
+	r := bytes.NewReader(input)
+	scanner := b.NewScanner(r)
+	tokens, err := scanner.ScanAll()
+		if err != nil {
+		t.Error("Unexpected error %s", err)
+	}
+	m := b.NewMachine(tokens)
+	output := m.Run()
+	outputString := string(output)
+	if outputString != "Hello World!" {
+		t.Error("Expecting 'Hello World!' received " + outputString)
+	}
 }
