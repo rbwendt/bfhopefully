@@ -33,9 +33,9 @@ func TestNewMachine(t *testing.T) {
 	}
 }
 
-func TestRun(t *testing.T) {
-	input := []byte("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.---.+++++++..+++.")
-	r := bytes.NewReader(input)
+func TestRunSimple(t *testing.T) {
+	tokenInput := []byte("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.---.+++++++..+++.")
+	r := bytes.NewReader(tokenInput)
 	scanner := b.NewScanner(r)
 	tokens, err := scanner.ScanAll()
 		if err != nil {
@@ -49,7 +49,24 @@ func TestRun(t *testing.T) {
 	}
 }
 
-func STestRun(t *testing.T) {
+func TestRunWithInput(t *testing.T) {
+	tokenInput := []byte(",.")
+	r := bytes.NewReader(tokenInput)
+	scanner := b.NewScanner(r)
+	tokens, err := scanner.ScanAll()
+		if err != nil {
+		t.Error("Unexpected error %s", err)
+	}
+	m := b.NewMachine(tokens)
+	m.Input = bytes.NewReader([]byte("Y"))
+	output := m.Run()
+	outputString := string(output)
+	if outputString != "Y" {
+		t.Error("Expecting 'Y' received " + outputString)
+	}
+}
+
+func STestRunLoop(t *testing.T) {
 	input := []byte("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
 	r := bytes.NewReader(input)
 	scanner := b.NewScanner(r)

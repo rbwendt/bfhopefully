@@ -1,7 +1,7 @@
 package bfhopefully
 
 import (
-	"bufio"
+	"bytes"
 )
 
 func (m *Machine) IncrementPointer() {
@@ -32,7 +32,7 @@ func (m *Machine) OutputByte() {
 }
 
 func (m *Machine) InputByte() {
-	input, _ := m.Input.ReadRune()
+	input, _ := m.Input.ReadByte()
 	m.State[m.Position] = byte(input)
 }
 
@@ -105,7 +105,7 @@ type Machine struct {
 	Operation int
 	State []byte
 	Output []byte
-	Input bufio.Reader
+	Input *bytes.Reader
 	Operations []Token
 }
 
