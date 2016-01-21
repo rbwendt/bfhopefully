@@ -50,7 +50,24 @@ func TestRunSimple(t *testing.T) {
 }
 
 func TestRunWithInput(t *testing.T) {
-	tokenInput := []byte(",.")
+	tokenInput := []byte(",.,.,.")
+	r := bytes.NewReader(tokenInput)
+	scanner := b.NewScanner(r)
+	tokens, err := scanner.ScanAll()
+		if err != nil {
+		t.Error("Unexpected error %s", err)
+	}
+	m := b.NewMachine(tokens)
+	m.Input = bytes.NewReader([]byte("YES"))
+	output := m.Run()
+	outputString := string(output)
+	if outputString != "YES" {
+		t.Error("Expecting 'YES' received " + outputString)
+	}
+}
+
+func TestReadTooMuch(t *testing.T) {
+	tokenInput := []byte(",.,.")
 	r := bytes.NewReader(tokenInput)
 	scanner := b.NewScanner(r)
 	tokens, err := scanner.ScanAll()
@@ -60,10 +77,12 @@ func TestRunWithInput(t *testing.T) {
 	m := b.NewMachine(tokens)
 	m.Input = bytes.NewReader([]byte("Y"))
 	output := m.Run()
-	outputString := string(output)
-	if outputString != "Y" {
-		t.Error("Expecting 'Y' received " + outputString)
+	expected := append([]byte("Y"), byte(0))
+	expectedString := string(expected)
+	if string(output) != expectedString {
+		t.Error("Expecting 'Y' received " + string(output))
 	}
+	
 }
 
 func STestRunLoop(t *testing.T) {
