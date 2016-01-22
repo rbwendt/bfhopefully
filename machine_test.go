@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"testing"
 	b "bfhopefully"
+	"fmt"
 )
 
 func TestNewMachine(t *testing.T) {
@@ -102,8 +103,30 @@ func TestReadTooMuch(t *testing.T) {
 	
 }
 
-func TestRunLoop(t *testing.T) {
-	input := []byte("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
+func TestRunLoop1(t *testing.T) {
+	program := "--->->->>+>+>>+[++++[>+++[>++++>-->+++<<<-]<-]<+++]>>>.>-->-.>..+>++++>+++.+>-->[>-.<<]"
+	input := []byte(program)
+	r := bytes.NewReader(input)
+	scanner := b.NewScanner(r)
+	tokens, err := scanner.ScanAll()
+		if err != nil {
+		t.Error("Unexpected error %s", err)
+	}
+	m := b.NewMachine(tokens)
+	output := m.Run()
+	outputString := string(output)
+	if outputString != "Hello, World!" {
+		fmt.Println(output)
+		fmt.Println(outputString)
+		t.Error("Expecting 'Hello, World!' received " + outputString)
+	}
+}
+
+func STestRunLoop1(t *testing.T) {
+	program := "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
+	program = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
+
+	input := []byte(program)
 	r := bytes.NewReader(input)
 	scanner := b.NewScanner(r)
 	tokens, err := scanner.ScanAll()
@@ -114,6 +137,8 @@ func TestRunLoop(t *testing.T) {
 	output := m.Run()
 	outputString := string(output)
 	if outputString != "Hello World!" {
+		fmt.Println(output)
+		fmt.Println(outputString)
 		t.Error("Expecting 'Hello World!' received " + outputString)
 	}
 }
