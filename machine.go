@@ -39,7 +39,7 @@ func (m *Machine) InputByte() {
 func (m *Machine) JumpForward() {
 	if m.State[m.Position] == 0 {
 		parenCount := 1
-		for i := m.Operation; i < len(m.Operations) ; i++ {
+		for i := m.Operation + 1; i < len(m.Operations) ; i++ {
 			if m.Operations[i] == JumpBackward {
 				parenCount --
 				if parenCount == 0 {
@@ -57,7 +57,7 @@ func (m *Machine) JumpBackward() {
 	if m.State[m.Position] != 0 {
 		parenCount := 1
 		jumped := false
-		for i := m.Operation; i > 0 ; i-- {
+		for i := m.Operation - 1; i > 0 ; i-- {
 			if m.Operations[i] == JumpForward {
 				parenCount --
 				if parenCount == 0 {

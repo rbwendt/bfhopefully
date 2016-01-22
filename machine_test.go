@@ -66,6 +66,23 @@ func TestRunWithInput(t *testing.T) {
 	}
 }
 
+func TestCommentLoop(t *testing.T) {
+	tokenInput := []byte("[a comment loop.],.,.,.")
+	r := bytes.NewReader(tokenInput)
+	scanner := b.NewScanner(r)
+	tokens, err := scanner.ScanAll()
+		if err != nil {
+		t.Error("Unexpected error %s", err)
+	}
+	m := b.NewMachine(tokens)
+	m.Input = bytes.NewReader([]byte("YES"))
+	output := m.Run()
+	outputString := string(output)
+	if outputString != "YES" {
+		t.Error("Expecting 'YES' received " + outputString)
+	}
+}
+
 func TestReadTooMuch(t *testing.T) {
 	tokenInput := []byte(",.,.")
 	r := bytes.NewReader(tokenInput)
@@ -85,7 +102,7 @@ func TestReadTooMuch(t *testing.T) {
 	
 }
 
-func STestRunLoop(t *testing.T) {
+func TestRunLoop(t *testing.T) {
 	input := []byte("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
 	r := bytes.NewReader(input)
 	scanner := b.NewScanner(r)
