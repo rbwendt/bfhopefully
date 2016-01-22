@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"testing"
 	b "bfhopefully"
-	"fmt"
 )
 
 func TestNewMachine(t *testing.T) {
@@ -116,8 +115,6 @@ func TestRunLoop1(t *testing.T) {
 	output := m.Run()
 	outputString := string(output)
 	if outputString != "Hello, World!" {
-		fmt.Println(output)
-		fmt.Println(outputString)
 		t.Error("Expecting 'Hello, World!' received " + outputString)
 	}
 }
@@ -136,10 +133,6 @@ func TestInterpreterBugs(t *testing.T) {
 	outputString := string(output)
 	expected := "Hello World!\n"
 	if outputString != expected {
-		fmt.Println(output)
-		fmt.Println([]byte(expected))
-		fmt.Println(outputString)
-		fmt.Println(expected)
 		t.Error("Expecting 'Hello, World!' received " + outputString)
 	}
 }
@@ -159,8 +152,6 @@ func TestRunHelloWorld1(t *testing.T) {
 	outputString := string(output)
 	expected := "Hello World!\n"
 	if outputString != expected {
-		fmt.Println(output)
-		fmt.Println(outputString)
 		t.Error("Expecting 'Hello World!' received " + outputString)
 	}
 }
@@ -180,8 +171,6 @@ func TestRunHelloWorld2(t *testing.T) {
 	outputString := string(output)
 	expected := "Hello World!\n"
 	if outputString != expected {
-		fmt.Println(output)
-		fmt.Println(outputString)
 		t.Error("Expecting 'Hello World!' received " + outputString)
 	}
 }
