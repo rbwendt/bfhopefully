@@ -122,9 +122,30 @@ func TestRunLoop1(t *testing.T) {
 	}
 }
 
-func STestRunLoop1(t *testing.T) {
+func TestInterpreterBugs(t *testing.T) {
+	program := ">++++++++[-<+++++++++>]<.>>+>-[+]++>++>+++[>[->+++<<+++>]<<]>-----.>->+++..+++.>-.<<+[>[+>+]>>]<--------------.>>.+++.------.--------.>+.>+."
+	input := []byte(program)
+	r := bytes.NewReader(input)
+	scanner := b.NewScanner(r)
+	tokens, err := scanner.ScanAll()
+		if err != nil {
+		t.Error("Unexpected error %s", err)
+	}
+	m := b.NewMachine(tokens)
+	output := m.Run()
+	outputString := string(output)
+	expected := "Hello World!\n"
+	if outputString != expected {
+		fmt.Println(output)
+		fmt.Println([]byte(expected))
+		fmt.Println(outputString)
+		fmt.Println(expected)
+		t.Error("Expecting 'Hello, World!' received " + outputString)
+	}
+}
+
+func TestRunHelloWorld1(t *testing.T) {
 	program := "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
-	program = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
 
 	input := []byte(program)
 	r := bytes.NewReader(input)
@@ -136,7 +157,29 @@ func STestRunLoop1(t *testing.T) {
 	m := b.NewMachine(tokens)
 	output := m.Run()
 	outputString := string(output)
-	if outputString != "Hello World!" {
+	expected := "Hello World!\n"
+	if outputString != expected {
+		fmt.Println(output)
+		fmt.Println(outputString)
+		t.Error("Expecting 'Hello World!' received " + outputString)
+	}
+}
+
+func TestRunHelloWorld2(t *testing.T) {
+	program := "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
+
+	input := []byte(program)
+	r := bytes.NewReader(input)
+	scanner := b.NewScanner(r)
+	tokens, err := scanner.ScanAll()
+		if err != nil {
+		t.Error("Unexpected error %s", err)
+	}
+	m := b.NewMachine(tokens)
+	output := m.Run()
+	outputString := string(output)
+	expected := "Hello World!\n"
+	if outputString != expected {
 		fmt.Println(output)
 		fmt.Println(outputString)
 		t.Error("Expecting 'Hello World!' received " + outputString)
