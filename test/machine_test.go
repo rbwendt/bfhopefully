@@ -3,7 +3,7 @@ package bfhopefully_test
 import (
 	"bytes"
 	"testing"
-	b "bfhopefully"
+	b "github.com/rbwendt/bfhopefully/bfhopefully"
 )
 
 func TestNewMachine(t *testing.T) {

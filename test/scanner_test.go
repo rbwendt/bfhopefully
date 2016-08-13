@@ -2,7 +2,7 @@ package bfhopefully_test
 
 import (
 	"testing"
-	b "bfhopefully"
+	b "github.com/rbwendt/bfhopefully/bfhopefully"
 	"bytes"
 	"reflect"
 )
