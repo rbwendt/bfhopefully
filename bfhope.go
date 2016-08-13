@@ -11,7 +11,7 @@ const (
 	OutputByte
 	InputByte
 	JumpForward
-	JumpBack
+	JumpBackward
 	
 	IncrementPointerRune rune = '>'
 	DecrementPointerRune rune = '<'
