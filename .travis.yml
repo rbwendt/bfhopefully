@@ -1,8 +1,1 @@
 language: go
-go:
-  - 1.4
-branches:
-  only:
-  - master
-script:
-  - cd test && go test .
