@@ -74,5 +74,5 @@ func TestIsOther(t *testing.T) {
 	if !IsOther('p') {
 		t.Error("Expected . to be an Other")
 	}
-	
+
 }

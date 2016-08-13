@@ -12,15 +12,15 @@ const (
 	InputByte
 	JumpForward
 	JumpBackward
-	
+
 	IncrementPointerRune rune = '>'
 	DecrementPointerRune rune = '<'
-	IncrementByteRune rune = '+'
-	DecrementByteRune rune = '-'
-	OutputByteRune rune = '.'
-	InputByteRune rune = ','
-	JumpForwardRune rune = '['
-	JumpBackwardRune rune = ']'
+	IncrementByteRune    rune = '+'
+	DecrementByteRune    rune = '-'
+	OutputByteRune       rune = '.'
+	InputByteRune        rune = ','
+	JumpForwardRune      rune = '['
+	JumpBackwardRune     rune = ']'
 )
 
 func IsIncrementPointer(ch rune) bool {

@@ -11,7 +11,7 @@ func TestNewMachine(t *testing.T) {
 	if len(m.Operations) != 0 {
 		t.Error("Unexpected Operations")
 	}
-	
+
 	m = NewMachine([]Token{IncrementPointer})
 	if len(m.Operations) != 1 {
 		t.Error("Unexpected Length")
@@ -37,7 +37,7 @@ func TestRunSimple(t *testing.T) {
 	r := bytes.NewReader(tokenInput)
 	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
-		if err != nil {
+	if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
 	m := NewMachine(tokens)
@@ -53,7 +53,7 @@ func TestRunWithInput(t *testing.T) {
 	r := bytes.NewReader(tokenInput)
 	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
-		if err != nil {
+	if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
 	m := NewMachine(tokens)
@@ -70,7 +70,7 @@ func TestCommentLoop(t *testing.T) {
 	r := bytes.NewReader(tokenInput)
 	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
-		if err != nil {
+	if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
 	m := NewMachine(tokens)
@@ -87,7 +87,7 @@ func TestReadTooMuch(t *testing.T) {
 	r := bytes.NewReader(tokenInput)
 	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
-		if err != nil {
+	if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
 	m := NewMachine(tokens)
@@ -98,7 +98,7 @@ func TestReadTooMuch(t *testing.T) {
 	if string(output) != expectedString {
 		t.Error("Expecting 'Y' received " + string(output))
 	}
-	
+
 }
 
 func TestRunLoop1(t *testing.T) {
@@ -107,7 +107,7 @@ func TestRunLoop1(t *testing.T) {
 	r := bytes.NewReader(input)
 	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
-		if err != nil {
+	if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
 	m := NewMachine(tokens)
@@ -124,7 +124,7 @@ func TestInterpreterBugs(t *testing.T) {
 	r := bytes.NewReader(input)
 	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
-		if err != nil {
+	if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
 	m := NewMachine(tokens)
@@ -143,7 +143,7 @@ func TestRunHelloWorld1(t *testing.T) {
 	r := bytes.NewReader(input)
 	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
-		if err != nil {
+	if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
 	m := NewMachine(tokens)
@@ -162,7 +162,7 @@ func TestRunHelloWorld2(t *testing.T) {
 	r := bytes.NewReader(input)
 	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
-		if err != nil {
+	if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
 	m := NewMachine(tokens)

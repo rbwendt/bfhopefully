@@ -5,17 +5,17 @@ import (
 )
 
 func (m *Machine) IncrementPointer() {
-	if m.Position == len(m.State) - 1 {
+	if m.Position == len(m.State)-1 {
 		m.State = append(m.State, byte(0))
 	}
-	m.Position ++
+	m.Position++
 }
 
 func (m *Machine) DecrementPointer() {
 	if m.Position == 0 {
 		m.State = append([]byte{byte(0)}, m.State...)
 	} else {
-		m.Position --
+		m.Position--
 	}
 }
 
@@ -39,15 +39,15 @@ func (m *Machine) InputByte() {
 func (m *Machine) JumpForward() {
 	if m.State[m.Position] == 0 {
 		parenCount := 1
-		for i := m.Operation + 1; i < len(m.Operations) ; i++ {
+		for i := m.Operation + 1; i < len(m.Operations); i++ {
 			if m.Operations[i] == JumpBackward {
-				parenCount --
+				parenCount--
 				if parenCount == 0 {
 					m.Operation = i
-					break;
+					break
 				}
 			} else if m.Operations[i] == JumpForward {
-				parenCount ++
+				parenCount++
 			}
 		}
 	}
@@ -57,25 +57,25 @@ func (m *Machine) JumpBackward() {
 	if m.State[m.Position] != 0 {
 		parenCount := 1
 		jumped := false
-		for i := m.Operation - 1; i > 0 ; i-- {
+		for i := m.Operation - 1; i > 0; i-- {
 			if m.Operations[i] == JumpForward {
-				parenCount --
+				parenCount--
 				if parenCount == 0 {
 					m.Operation = i
 					jumped = true
-					break;
+					break
 				}
 			} else if m.Operations[i] == JumpBackward {
-				parenCount ++
+				parenCount++
 			}
 		}
 		if !jumped {
-			m.Operation ++
+			m.Operation++
 		}
 	}
 }
 
-func (m *Machine) Run() ([]byte) {
+func (m *Machine) Run() []byte {
 	for m.Operation < len(m.Operations) {
 		currentOperation := m.Operations[m.Operation]
 		if currentOperation == IncrementPointer {
@@ -101,11 +101,11 @@ func (m *Machine) Run() ([]byte) {
 }
 
 type Machine struct {
-	Position int
-	Operation int
-	State []byte
-	Output []byte
-	Input *bytes.Reader
+	Position   int
+	Operation  int
+	State      []byte
+	Output     []byte
+	Input      *bytes.Reader
 	Operations []Token
 }
 
@@ -119,6 +119,3 @@ func NewMachine(t []Token) Machine {
 	}
 	return m
 }
-
-
-

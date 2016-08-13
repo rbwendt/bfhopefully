@@ -1,9 +1,9 @@
 package bfhopefully
 
 import (
-	"testing"
 	"bytes"
 	"reflect"
+	"testing"
 )
 
 func TestScan(t *testing.T) {
