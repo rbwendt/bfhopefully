@@ -1,34 +1,33 @@
-package bfhopefully_test
+package bfhopefully
 
 import (
 	"bytes"
 	"testing"
-	b "github.com/rbwendt/bfhopefully/bfhopefully"
 )
 
 func TestNewMachine(t *testing.T) {
 
-	m := b.NewMachine([]b.Token{b.Other})
+	m := NewMachine([]Token{Other})
 	if len(m.Operations) != 0 {
 		t.Error("Unexpected Operations")
 	}
 	
-	m = b.NewMachine([]b.Token{b.IncrementPointer})
+	m = NewMachine([]Token{IncrementPointer})
 	if len(m.Operations) != 1 {
 		t.Error("Unexpected Length")
 	}
-	if m.Operations[0] != b.IncrementPointer {
+	if m.Operations[0] != IncrementPointer {
 		t.Error("Unexpected Operation")
 	}
 
-	m = b.NewMachine([]b.Token{b.DecrementPointer, b.InputByte})
+	m = NewMachine([]Token{DecrementPointer, InputByte})
 	if len(m.Operations) != 2 {
 		t.Error("Unexpected Length")
 	}
-	if m.Operations[0] != b.DecrementPointer {
+	if m.Operations[0] != DecrementPointer {
 		t.Error("Unexpected Operation")
 	}
-	if m.Operations[1] != b.InputByte {
+	if m.Operations[1] != InputByte {
 		t.Error("Unexpected Operation")
 	}
 }
@@ -36,12 +35,12 @@ func TestNewMachine(t *testing.T) {
 func TestRunSimple(t *testing.T) {
 	tokenInput := []byte("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.---.+++++++..+++.")
 	r := bytes.NewReader(tokenInput)
-	scanner := b.NewScanner(r)
+	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
 		if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
-	m := b.NewMachine(tokens)
+	m := NewMachine(tokens)
 	output := m.Run()
 	outputString := string(output)
 	if outputString != "HELLO" {
@@ -52,12 +51,12 @@ func TestRunSimple(t *testing.T) {
 func TestRunWithInput(t *testing.T) {
 	tokenInput := []byte(",.,.,.")
 	r := bytes.NewReader(tokenInput)
-	scanner := b.NewScanner(r)
+	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
 		if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
-	m := b.NewMachine(tokens)
+	m := NewMachine(tokens)
 	m.Input = bytes.NewReader([]byte("YES"))
 	output := m.Run()
 	outputString := string(output)
@@ -69,12 +68,12 @@ func TestRunWithInput(t *testing.T) {
 func TestCommentLoop(t *testing.T) {
 	tokenInput := []byte("[a comment loop.],.,.,.")
 	r := bytes.NewReader(tokenInput)
-	scanner := b.NewScanner(r)
+	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
 		if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
-	m := b.NewMachine(tokens)
+	m := NewMachine(tokens)
 	m.Input = bytes.NewReader([]byte("YES"))
 	output := m.Run()
 	outputString := string(output)
@@ -86,12 +85,12 @@ func TestCommentLoop(t *testing.T) {
 func TestReadTooMuch(t *testing.T) {
 	tokenInput := []byte(",.,.")
 	r := bytes.NewReader(tokenInput)
-	scanner := b.NewScanner(r)
+	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
 		if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
-	m := b.NewMachine(tokens)
+	m := NewMachine(tokens)
 	m.Input = bytes.NewReader([]byte("Y"))
 	output := m.Run()
 	expected := append([]byte("Y"), byte(0))
@@ -106,12 +105,12 @@ func TestRunLoop1(t *testing.T) {
 	program := "--->->->>+>+>>+[++++[>+++[>++++>-->+++<<<-]<-]<+++]>>>.>-->-.>..+>++++>+++.+>-->[>-.<<]"
 	input := []byte(program)
 	r := bytes.NewReader(input)
-	scanner := b.NewScanner(r)
+	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
 		if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
-	m := b.NewMachine(tokens)
+	m := NewMachine(tokens)
 	output := m.Run()
 	outputString := string(output)
 	if outputString != "Hello, World!" {
@@ -123,12 +122,12 @@ func TestInterpreterBugs(t *testing.T) {
 	program := ">++++++++[-<+++++++++>]<.>>+>-[+]++>++>+++[>[->+++<<+++>]<<]>-----.>->+++..+++.>-.<<+[>[+>+]>>]<--------------.>>.+++.------.--------.>+.>+."
 	input := []byte(program)
 	r := bytes.NewReader(input)
-	scanner := b.NewScanner(r)
+	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
 		if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
-	m := b.NewMachine(tokens)
+	m := NewMachine(tokens)
 	output := m.Run()
 	outputString := string(output)
 	expected := "Hello World!\n"
@@ -142,12 +141,12 @@ func TestRunHelloWorld1(t *testing.T) {
 
 	input := []byte(program)
 	r := bytes.NewReader(input)
-	scanner := b.NewScanner(r)
+	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
 		if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
-	m := b.NewMachine(tokens)
+	m := NewMachine(tokens)
 	output := m.Run()
 	outputString := string(output)
 	expected := "Hello World!\n"
@@ -161,12 +160,12 @@ func TestRunHelloWorld2(t *testing.T) {
 
 	input := []byte(program)
 	r := bytes.NewReader(input)
-	scanner := b.NewScanner(r)
+	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
 		if err != nil {
 		t.Error("Unexpected error %s", err)
 	}
-	m := b.NewMachine(tokens)
+	m := NewMachine(tokens)
 	output := m.Run()
 	outputString := string(output)
 	expected := "Hello World!\n"

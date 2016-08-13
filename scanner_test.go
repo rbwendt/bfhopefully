@@ -1,8 +1,7 @@
-package bfhopefully_test
+package bfhopefully
 
 import (
 	"testing"
-	b "github.com/rbwendt/bfhopefully/bfhopefully"
 	"bytes"
 	"reflect"
 )
@@ -10,8 +9,8 @@ import (
 func TestScan(t *testing.T) {
 	input := []byte("<>+- .,[]")
 	r := bytes.NewReader(input)
-	expectedTokens := []b.Token{b.DecrementPointer, b.IncrementPointer, b.IncrementByte, b.DecrementByte, b.Other, b.OutputByte, b.InputByte, b.JumpForward, b.JumpBackward}
-	scanner := b.NewScanner(r)
+	expectedTokens := []Token{DecrementPointer, IncrementPointer, IncrementByte, DecrementByte, Other, OutputByte, InputByte, JumpForward, JumpBackward}
+	scanner := NewScanner(r)
 	for i := 0; i < len(input); i++ {
 		token, err := scanner.Scan()
 		if err != nil {
@@ -26,8 +25,8 @@ func TestScan(t *testing.T) {
 func TestScanAll(t *testing.T) {
 	input := []byte("<>+- .,[]")
 	r := bytes.NewReader(input)
-	expectedTokens := []b.Token{b.DecrementPointer, b.IncrementPointer, b.IncrementByte, b.DecrementByte, b.Other, b.OutputByte, b.InputByte, b.JumpForward, b.JumpBackward}
-	scanner := b.NewScanner(r)
+	expectedTokens := []Token{DecrementPointer, IncrementPointer, IncrementByte, DecrementByte, Other, OutputByte, InputByte, JumpForward, JumpBackward}
+	scanner := NewScanner(r)
 	tokens, err := scanner.ScanAll()
 	if err != nil {
 		t.Error("Unexpected error %s", err)

@@ -1,78 +1,77 @@
-package bfhopefully_test
+package bfhopefully
 
 import (
 	"testing"
-	b "github.com/rbwendt/bfhopefully/bfhopefully"
 )
 
 func TestIsIncrementPointer(t *testing.T) {
-	if !b.IsIncrementPointer(b.IncrementPointerRune) {
+	if !IsIncrementPointer(IncrementPointerRune) {
 		t.Error("Expected > to be an IncrementPointer")
 	}
-	if b.IsIncrementPointer('p') {
+	if IsIncrementPointer('p') {
 		t.Error("Did not expected p to be an IncrementPointer")
 	}
 }
 
 func TestIsDecrementPointer(t *testing.T) {
-	if !b.IsDecrementPointer(b.DecrementPointerRune) {
+	if !IsDecrementPointer(DecrementPointerRune) {
 		t.Error("Expected > to be a DecrementPointer")
 	}
-	if b.IsDecrementPointer('p') {
+	if IsDecrementPointer('p') {
 		t.Error("Did not expected p to be a DecrementPointer")
 	}
 }
 
 func TestIsIncrementByte(t *testing.T) {
-	if !b.IsIncrementByte(b.IncrementByteRune) {
+	if !IsIncrementByte(IncrementByteRune) {
 		t.Error("Expected + to be an IncrementByte")
 	}
-	if b.IsIncrementByte('p') {
+	if IsIncrementByte('p') {
 		t.Error("Did not expected p to be an IncrementByte")
 	}
 }
 
 func TestIsDecrementByte(t *testing.T) {
-	if !b.IsDecrementByte(b.DecrementByteRune) {
+	if !IsDecrementByte(DecrementByteRune) {
 		t.Error("Expected - to be a DecrementByte")
 	}
-	if b.IsIncrementByte('p') {
+	if IsIncrementByte('p') {
 		t.Error("Did not expected p to be a IncrementByte")
 	}
 }
 
 func TestIsOutputByte(t *testing.T) {
-	if !b.IsOutputByte(b.OutputByteRune) {
+	if !IsOutputByte(OutputByteRune) {
 		t.Error("Expected . to be an OutputByte")
 	}
-	if b.IsOutputByte('p') {
+	if IsOutputByte('p') {
 		t.Error("Did not expected p to be an OutputByte")
 	}
 }
 
 func TestIsJumpForward(t *testing.T) {
-	if !b.IsJumpForward(b.JumpForwardRune) {
+	if !IsJumpForward(JumpForwardRune) {
 		t.Error("Expected . to be a JumpForward")
 	}
-	if b.IsJumpForward('p') {
+	if IsJumpForward('p') {
 		t.Error("Did not expected p to be a JumpForward")
 	}
 }
 
 func TestIsJumpBackward(t *testing.T) {
-	if !b.IsJumpBackward(b.JumpBackwardRune) {
+	if !IsJumpBackward(JumpBackwardRune) {
 		t.Error("Expected . to be a JumpBackward")
 	}
-	if b.IsJumpBackward('p') {
+	if IsJumpBackward('p') {
 		t.Error("Did not expected p to be a JumpBackward")
 	}
 }
 
 func TestIsOther(t *testing.T) {
-	if b.IsOther(b.JumpBackwardRune) {
+	if IsOther(JumpBackwardRune) {
 		t.Error("Expected . to be a JumpBackward")
 	}
-	if !b.IsOther('p') {
+	if !IsOther('p') {
 		t.Error("Expected . to be an Other")
 	}
 	
